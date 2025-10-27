@@ -1,4 +1,4 @@
-# AG Christmas Bech Volley Tournament 2025 — Event Webpage
+# VolleyFest 2025 — Event Webpage
 
 Files:
 - index.html — main webpage (hero, about, schedule, teams, registration, venue)

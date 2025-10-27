@@ -17,109 +17,29 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 
-/* Christmas background layer (large scenic SVG) + snow + soft gradient */
+/* Wintery, subtle repeating snow + soft gradient background */
 body {
   margin: 0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 2px),
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 2px),
+    linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+  background-size: 16px 16px, 22px 22px, 100% 100%;
   color: var(--dark);
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   position: relative;
-  background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
 }
 
-/* Large decorative Christmas scene at the bottom using an embedded SVG */
-/* This adds stylized pine silhouettes, gentle hills and string lights */
-body::before {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 42vh;
-  z-index: 0;
-  opacity: 0.16;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: cover;
-  background-image: url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='xMidYMax slice'>\
-    <defs>\
-      <linearGradient id='g1' x1='0' x2='1' y1='0' y2='0'>\
-        <stop offset='0' stop-color='%230a7a3f' stop-opacity='1'/>\
-        <stop offset='1' stop-color='%23183f2a' stop-opacity='1'/>\
-      </linearGradient>\
-      <linearGradient id='sky' x1='0' x2='0' y1='0' y2='1'>\
-        <stop offset='0' stop-color='%23ffffff' stop-opacity='0.0'/>\
-        <stop offset='1' stop-color='%23ffffff' stop-opacity='0.05'/>\
-      </linearGradient>\
-    </defs>\
-    <!-- gentle hill -->\
-    <path d='M0 220 C150 160 350 160 600 220 C850 280 1050 240 1200 220 L1200 300 L0 300 Z' fill='%230f6b3f' fill-opacity='0.12'/>\
-    <!-- cluster of stylized pines -->\
-    <g transform='translate(60,140)'>\
-      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
-      <polygon points='40,110 5,170 75,170' fill='%230a7a3f'/>\
-      <rect x='34' y='170' width='12' height='30' fill='%23665433'/>\
-    </g>\
-    <g transform='translate(220,120)'>\
-      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
-      <polygon points='40,100 5,160 75,160' fill='%230a7a3f'/>\
-      <rect x='34' y='160' width='12' height='40' fill='%23665433'/>\
-    </g>\
-    <g transform='translate(420,130)'>\
-      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
-      <polygon points='40,105 5,165 75,165' fill='%230a7a3f'/>\
-      <rect x='34' y='165' width='12' height='35' fill='%23665433'/>\
-    </g>\
-    <g transform='translate(640,125)'>\
-      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
-      <polygon points='40,98 5,158 75,158' fill='%230a7a3f'/>\
-      <rect x='34' y='158' width='12' height='42' fill='%23665433'/>\
-    </g>\
-    <g transform='translate(900,135)'>\
-      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
-      <polygon points='40,112 5,172 75,172' fill='%230a7a3f'/>\
-      <rect x='34' y='172' width='12' height='28' fill='%23665433'/>\
-    </g>\
-    <!-- subtle moon/bokeh in the sky -->\
-    <circle cx='1040' cy='40' r='28' fill='%23fff6d6' fill-opacity='0.85'/>\
-    <!-- string lights arching above the scene -->\
-    <g stroke='%23000000' stroke-opacity='0' fill='%23ffb400'>\
-      <circle cx='120' cy='40' r='6' fill='%23ffb400'/>\
-      <circle cx='180' cy='32' r='6' fill='%23c9182b'/>\
-      <circle cx='240' cy='44' r='6' fill='%230a7a3f'/>\
-      <circle cx='300' cy='36' r='6' fill='%23ffb400'/>\
-      <circle cx='360' cy='42' r='6' fill='%23c9182b'/>\
-      <circle cx='420' cy='34' r='6' fill='%230a7a3f'/>\
-      <circle cx='480' cy='40' r='6' fill='%23ffb400'/>\
-      <circle cx='540' cy='32' r='6' fill='%23c9182b'/>\
-      <circle cx='600' cy='46' r='6' fill='%230a7a3f'/>\
-      <circle cx='720' cy='36' r='6' fill='%23ffb400'/>\
-      <circle cx='840' cy='34' r='6' fill='%23c9182b'/>\
-      <circle cx='960' cy='40' r='6' fill='%230a7a3f'/>\
-    </g>\
-  </svg>");
-}
+/* Page container */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 1rem; }
 
-/* Snowfall overlay: layered, soft flakes using pseudo-element */
-body::after {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  mix-blend-mode: screen;
-  opacity: 0.75;
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 6px),
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 5px),
-    radial-gradient(circle at 70% 22%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 6px),
-    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.85) 0px, rgba(255,255,255,0) 4px);
-  background-size: 140px 140px, 200px 200px, 140px 140px, 100px 100px;
+/* Skip link */
+.skip-link {
+  position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  position: static; left: auto; top: auto; width: auto; height: auto; padding: .5rem 1rem; background: #000; color: #fff; z-index: 1000;
 }
 
 /* Header - garland-like subtle gradient and slightly larger logo */
@@ -146,7 +66,6 @@ body::after {
   padding: 2rem 0;
   position: relative;
   overflow: hidden;
-  z-index: 1;
 }
 .hero::after {
   content: "";
@@ -155,7 +74,7 @@ body::after {
   width: 220px; height: 220px;
   background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0) 40%),
               conic-gradient(from 120deg at 50% 50%, rgba(201,24,35,0.15), rgba(10,122,63,0.15));
-  transform: rotate(18deg); border-radius: 50%; opacity: 0.95; pointer-events: none;
+  transform: rotate(18deg); border-radius: 50%; opacity: 0.9; pointer-events: none;
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 320px; gap: 1.25rem; align-items: center; z-index: 1; }
 .hero-text h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
@@ -245,6 +164,24 @@ body::after {
   0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(110vh) translateX(30vw) rotate(360deg); opacity: 0.9; }
+}
+
+/* Decorative layered snow - non-intrusive, uses pseudo-elements */
+body::before, body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  background-image:
+    radial-gradient(circle at 5% 10%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 5px),
+    radial-gradient(circle at 80% 50%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 4px);
+  background-size: 120px 120px, 160px 160px, 120px 120px, 80px 80px;
 }
 
 /* Responsive adjustments */
