@@ -3,92 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scrollable Gallery with Arrows</title>
+<title>Full-Size Scrollable Gallery</title>
 <style>
   body {
     font-family: sans-serif;
     margin: 0;
-    background: #f5f5f5;
+    background-color: #f5f5f5;
+    color: #333;
   }
 
-  .gallery-wrapper {
-    position: relative;
-    max-width: 90%;
-    margin: 20px auto;
+  h2 {
+    text-align: center;
+    margin: 30px 0 10px;
   }
 
-  .gallery-container {
+  .gallery-scroll {
     display: flex;
-    overflow-x: hidden;
-    gap: 10px;
+    overflow-x: auto;      /* enables horizontal scroll */
+    overflow-y: hidden;
+    gap: 15px;
     scroll-behavior: smooth;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 95vw;
   }
 
-  /* Images scaled to 75% of original (250x150) */
-  .gallery-item {
+  .gallery-scroll::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .gallery-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+  }
+
+  .gallery-scroll::-webkit-scrollbar-track {
+    background: #ddd;
+  }
+
+  .gallery-scroll img {
     flex: 0 0 auto;
-    width: 188px;   /* 75% of 250px */
-    height: 113px;  /* 75% of 150px */
-    border-radius: 10px;
+    width: 600px;           /* large enough for good visibility */
+    height: 400px;          /* maintain aspect ratio visually */
     object-fit: cover;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
-    cursor: default; /* no click interaction */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
   }
 
-  .gallery-item:hover {
-    transform: scale(1.05);
+  .gallery-scroll img:hover {
+    transform: scale(1.02);
   }
 
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
+  @media (max-width: 768px) {
+    .gallery-scroll img {
+      width: 90vw;          /* fit small screens */
+      height: auto;
+    }
   }
-
-  .arrow-left { left: -20px; }
-  .arrow-right { right: -20px; }
 </style>
 </head>
 <body>
 
-<h2 style="text-align:center;">Gallery</h2>
+<h2>AG Beach Volley Tournament Gallery</h2>
 
-<div class="gallery-wrapper">
-  <button class="arrow arrow-left" onclick="scrollGallery(-1)">&#10094;</button>
-  <div class="gallery-container" id="gallery">
-    <img src="ag_bvt23_1.jpg" class="gallery-item" alt="Image 1">
-    <img src="ag_bvt23_13.jpg" class="gallery-item" alt="Image 2">
-    <img src="ag_bvt23_4.jpg" class="gallery-item" alt="Image 3">
-    <img src="ag_bvt23_6.jpg" class="gallery-item" alt="Image 4">
-    <img src="ag_bvt23_7.jpg" class="gallery-item" alt="Image 5">
-  </div>
-  <button class="arrow arrow-right" onclick="scrollGallery(1)">&#10095;</button>
+<div class="gallery-scroll">
+  <img src="ag_bvt23_1.jpg" alt="Tournament photo 1">
+  <img src="ag_bvt23_13.jpg" alt="Tournament photo 2">
+  <img src="ag_bvt23_4.jpg" alt="Tournament photo 3">
+  <img src="ag_bvt23_6.jpg" alt="Tournament photo 4">
+  <img src="ag_bvt23_7.jpg" alt="Tournament photo 5">
 </div>
 
-<script>
-const gallery = document.getElementById('gallery');
-const scrollAmount = 195; // roughly width of one image + gap
+</body>
+</html>
 
-function scrollGallery(direction) {
-  gallery.scrollBy({
-    left: direction * scrollAmount,
-    behavior: 'smooth'
-  });
-}
-</script>
 
 </body>
 </html>
