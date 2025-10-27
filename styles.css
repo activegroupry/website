@@ -1,0 +1,103 @@
+:root{
+  --accent:#ff7a18;
+  --dark:#0f1720;
+  --muted:#68707a;
+  --bg:#f7f8fa;
+  --max-width:1100px;
+  --radius:10px;
+  --gap:1rem;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color-scheme: light;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+
+.container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+
+.skip-link{
+  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+}
+.skip-link:focus{
+  position:static;left:auto;top:auto;width:auto;height:auto;padding:.5rem 1rem;background:#000;color:#fff;z-index:1000;
+}
+
+/* Header */
+.site-header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{width:54px;height:54px;border-radius:8px;object-fit:cover}
+.site-title{margin:0;font-size:1.1rem}
+.site-sub{margin:0;font-size:.85rem;color:var(--muted)}
+
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.5rem;align-items:center}
+.nav a{display:inline-block;padding:.5rem .75rem;color:var(--dark);text-decoration:none;border-radius:6px}
+.nav a:hover,.nav a:focus{background:#f2f5f7}
+.nav .cta{background:var(--accent);color:#fff}
+
+/* Hero */
+.hero{background:linear-gradient(180deg, #fff 0%, #fcfbf9 100%);padding:2rem 0}
+.hero-inner{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;align-items:center}
+.hero-text h2{margin:0 0 .5rem;font-size:1.6rem}
+.lead{margin:0 0 1rem;color:var(--muted)}
+.hero-ctas{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
+.btn{display:inline-block;padding:.6rem .9rem;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-outline{background:transparent;border-color:var(--accent);color:var(--accent)}
+.meta{font-size:.85rem;color:var(--muted)}
+
+/* Hero card */
+.hero-card{background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(16,24,40,0.06);overflow:hidden}
+.card-top{background:linear-gradient(90deg,var(--accent),#ffb068);color:#fff;padding:.6rem;font-weight:700}
+.card-body{padding:1rem}
+.countdown{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.venue{color:var(--muted);font-size:.9rem}
+
+/* Sections */
+.section{padding:1.25rem 0}
+.section h3{margin:0 0 .75rem}
+
+/* Schedule table */
+.schedule-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 4px 16px rgba(16,24,40,0.04)}
+.schedule-table thead{background:#fafafa;color:var(--muted)}
+.schedule-table th,.schedule-table td{padding:.75rem;text-align:left;border-bottom:1px solid #f0f0f0}
+
+/* Cards */
+.cards{display:flex;gap:1rem;flex-wrap:wrap}
+.team-card{flex:1 1 220px;background:#fff;padding:1rem;border-radius:8px;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+
+/* Form */
+.form{background:#fff;padding:1rem;border-radius:8px;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+.form label{display:block;margin:.5rem 0 .25rem;font-weight:600}
+.form input[type="text"],.form input[type="email"],.form select{width:100%;padding:.6rem;border:1px solid #e6e9ee;border-radius:6px}
+.form fieldset{border:0;padding:0;margin:0 0 1rem}
+.form-actions{display:flex;gap:.5rem;margin-top:.5rem}
+
+.form-message{margin-top:.75rem;color:green;font-weight:600}
+.muted{color:var(--muted)}
+
+/* Venue */
+.venue-grid{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start}
+.map iframe{width:100%;height:220px;border:0;border-radius:8px}
+
+/* Footer */
+.site-footer{padding:1rem 0;background:#fff;border-top:1px solid #eee;margin-top:2rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.social{list-style:none;margin:0;padding:0;display:flex;gap:.5rem}
+.social a{display:inline-block;padding:.35rem .6rem;border-radius:6px;background:#f6f7f8;text-decoration:none;color:var(--muted);font-weight:700}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .venue-grid{grid-template-columns:1fr}
+  .container{padding:1rem}
+  .header-inner{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .nav ul{flex-wrap:wrap}
+}
