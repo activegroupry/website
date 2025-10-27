@@ -176,20 +176,43 @@
       </form>
     </section>
 
-    <section id="venue" class="container section venue">
-      <h3>Location</h3>
-      <div class="venue-grid">
-        <div class="map">
-          <!-- Replace with real Google Maps iframe or other map embed -->
-          <iframe title="Venue map" src="https://www.openstreetmap.org/search?lat=60.275582&lon=24.812220&zoom=18#map=18/60.275580/24.812220" frameborder="0"></iframe>
-        </div>
-        <div class="venue-info">
-          <h4>Heakka beach volley club</h4>
-          <p> Martinkyläntie 59, 01720, Vantaa — indoor beach volley courts. Parking available on-site.</p>
-          <p><strong>Contact:</strong> active.group.ry@gmail.com </p>
-        </div>
-      </div>
-    </section>
+  <section id="venue" class="container section venue">
+  <h3>Location</h3>
+  <div class="venue-grid">
+    <div class="map">
+      <!-- Embedded Google Map -->
+      <iframe
+        title="Venue map"
+        width="100%"
+        height="300"
+        style="border: 0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1973.7105252540054!2d24.812220!3d60.275582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4692097cc16a7f73%3A0x123456789abcdef!2sMartinkyl%C3%A4ntie%2059%2C%2001720%20Vantaa!5e0!3m2!1sen!2sfi!4v1700000000000">
+      </iframe>
+      <br />
+      <small>
+        <a
+          href="https://www.google.com/maps?q=Martinkyläntie+59,+01720+Vantaa"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View larger map
+        </a>
+      </small>
+    </div>
+
+    <div class="venue-info">
+      <h4>Heakka Beach Volley Club</h4>
+      <p>Martinkyläntie 59, 01720 Vantaa — indoor beach volley courts. Parking available on-site.</p>
+      <p>
+        <strong>Contact:</strong>
+        <a href="mailto:active.group.ry@gmail.com">active.group.ry@gmail.com</a>
+      </p>
+    </div>
+  </div>
+</section>
 
   </main>
 
@@ -199,7 +222,7 @@
       <ul class="social">
         <li><a href="https://www.instagram.com/activegroupry/" aria-label="Instagram">insta</a></li>
         <li><a href="https://www.facebook.com/groups/ActiveG" aria-label="Facebook">FB</a></li>
-        <li><a href="active.group.ry@gmail.com" aria-label="Contact email">Email</a></li>
+        <li><a href="mailto:active.group.ry@gmail.com" aria-label="Contact email">Email</a></li>
       </ul>
     </div>
   </footer>
