@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrollable Gallery with Arrows</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
+  }
+
+  .gallery-wrapper {
+    position: relative;
+    max-width: 90%;
+    margin: auto;
+  }
+
+  .gallery-container {
+    display: flex;
+    overflow-x: hidden; /* hide scrollbar */
+    gap: 10px;
+    scroll-behavior: smooth;
+  }
+
+  .gallery-item {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+
+  /* Arrow buttons */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .arrow-left {
+    left: -20px;
+  }
+
+  .arrow-right {
+    right: -20px;
+  }
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Gallery</h2>
+<div class="gallery-wrapper">
+  <button class="arrow arrow-left" onclick="scrollGallery(-1)">&#10094;</button>
+  <div class="gallery-container" id="gallery">
+    <img src="https://via.placeholder.com/250x150?text=1" class="gallery-item" alt="Image_1">
+    <img src="https://via.placeholder.com/250x150?text=2" class="gallery-item" alt="Image_2">
+    <img src="https://via.placeholder.com/250x150?text=3" class="gallery-item" alt="Image_3">
+    <img src="https://via.placeholder.com/250x150?text=4" class="gallery-item" alt="Image_4">
+    <img src="https://via.placeholder.com/250x150?text=5" class="gallery-item" alt="Image_5">
+    <img src="https://via.placeholder.com/250x150?text=6" class="gallery-item" alt="Image_6">
+  </div>
+  <button class="arrow arrow-right" onclick="scrollGallery(1)">&#10095;</button>
+</div>
+
+<script>
+  const gallery = document.getElementById('gallery');
+  const scrollAmount = 260; // scroll by approx one image
+
+  function scrollGallery(direction) {
+    gallery.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth'
+    });
+  }
+</script>
+
+</body>
+</html>
