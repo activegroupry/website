@@ -1,103 +1,257 @@
 :root{
-  --accent:#ff7a18;
-  --dark:#0f1720;
-  --muted:#68707a;
-  --bg:#f7f8fa;
-  --max-width:1100px;
-  --radius:10px;
-  --gap:1rem;
+  /* Festive palette: red, green, warm gold */
+  --accent: #c9182b;    /* festive red */
+  --accent2: #0a7a3f;   /* festive green */
+  --gold: #ffb400;      /* warm gold */
+  --dark: #0f1720;
+  --muted: #68707a;
+  --bg: #f7fafc;        /* slightly cooler for a winter feel */
+  --max-width: 1100px;
+  --radius: 10px;
+  --gap: 1rem;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color-scheme: light;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--dark);
-  line-height:1.45;
-  -webkit-font-smoothing:antialiased;
+/* Global box-sizing and base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+/* Christmas background layer (large scenic SVG) + snow + soft gradient */
+body {
+  margin: 0;
+  color: var(--dark);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
 }
 
-.container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-
-.skip-link{
-  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+/* Large decorative Christmas scene at the bottom using an embedded SVG */
+/* This adds stylized pine silhouettes, gentle hills and string lights */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42vh;
+  z-index: 0;
+  opacity: 0.16;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: cover;
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='xMidYMax slice'>\
+    <defs>\
+      <linearGradient id='g1' x1='0' x2='1' y1='0' y2='0'>\
+        <stop offset='0' stop-color='%230a7a3f' stop-opacity='1'/>\
+        <stop offset='1' stop-color='%23183f2a' stop-opacity='1'/>\
+      </linearGradient>\
+      <linearGradient id='sky' x1='0' x2='0' y1='0' y2='1'>\
+        <stop offset='0' stop-color='%23ffffff' stop-opacity='0.0'/>\
+        <stop offset='1' stop-color='%23ffffff' stop-opacity='0.05'/>\
+      </linearGradient>\
+    </defs>\
+    <!-- gentle hill -->\
+    <path d='M0 220 C150 160 350 160 600 220 C850 280 1050 240 1200 220 L1200 300 L0 300 Z' fill='%230f6b3f' fill-opacity='0.12'/>\
+    <!-- cluster of stylized pines -->\
+    <g transform='translate(60,140)'>\
+      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
+      <polygon points='40,110 5,170 75,170' fill='%230a7a3f'/>\
+      <rect x='34' y='170' width='12' height='30' fill='%23665433'/>\
+    </g>\
+    <g transform='translate(220,120)'>\
+      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
+      <polygon points='40,100 5,160 75,160' fill='%230a7a3f'/>\
+      <rect x='34' y='160' width='12' height='40' fill='%23665433'/>\
+    </g>\
+    <g transform='translate(420,130)'>\
+      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
+      <polygon points='40,105 5,165 75,165' fill='%230a7a3f'/>\
+      <rect x='34' y='165' width='12' height='35' fill='%23665433'/>\
+    </g>\
+    <g transform='translate(640,125)'>\
+      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
+      <polygon points='40,98 5,158 75,158' fill='%230a7a3f'/>\
+      <rect x='34' y='158' width='12' height='42' fill='%23665433'/>\
+    </g>\
+    <g transform='translate(900,135)'>\
+      <polygon points='40,140 0,200 80,200' fill='%230a7a3f'/>\
+      <polygon points='40,112 5,172 75,172' fill='%230a7a3f'/>\
+      <rect x='34' y='172' width='12' height='28' fill='%23665433'/>\
+    </g>\
+    <!-- subtle moon/bokeh in the sky -->\
+    <circle cx='1040' cy='40' r='28' fill='%23fff6d6' fill-opacity='0.85'/>\
+    <!-- string lights arching above the scene -->\
+    <g stroke='%23000000' stroke-opacity='0' fill='%23ffb400'>\
+      <circle cx='120' cy='40' r='6' fill='%23ffb400'/>\
+      <circle cx='180' cy='32' r='6' fill='%23c9182b'/>\
+      <circle cx='240' cy='44' r='6' fill='%230a7a3f'/>\
+      <circle cx='300' cy='36' r='6' fill='%23ffb400'/>\
+      <circle cx='360' cy='42' r='6' fill='%23c9182b'/>\
+      <circle cx='420' cy='34' r='6' fill='%230a7a3f'/>\
+      <circle cx='480' cy='40' r='6' fill='%23ffb400'/>\
+      <circle cx='540' cy='32' r='6' fill='%23c9182b'/>\
+      <circle cx='600' cy='46' r='6' fill='%230a7a3f'/>\
+      <circle cx='720' cy='36' r='6' fill='%23ffb400'/>\
+      <circle cx='840' cy='34' r='6' fill='%23c9182b'/>\
+      <circle cx='960' cy='40' r='6' fill='%230a7a3f'/>\
+    </g>\
+  </svg>");
 }
-.skip-link:focus{
-  position:static;left:auto;top:auto;width:auto;height:auto;padding:.5rem 1rem;background:#000;color:#fff;z-index:1000;
+
+/* Snowfall overlay: layered, soft flakes using pseudo-element */
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 5px),
+    radial-gradient(circle at 70% 22%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.85) 0px, rgba(255,255,255,0) 4px);
+  background-size: 140px 140px, 200px 200px, 140px 140px, 100px 100px;
 }
 
-/* Header */
-.site-header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.brand{display:flex;align-items:center;gap:.8rem}
-.logo{width:54px;height:54px;border-radius:8px;object-fit:cover}
-.site-title{margin:0;font-size:1.1rem}
-.site-sub{margin:0;font-size:.85rem;color:var(--muted)}
+/* Header - garland-like subtle gradient and slightly larger logo */
+.site-header {
+  background: linear-gradient(90deg, rgba(10,122,63,0.06), rgba(201,24,35,0.03));
+  border-bottom: 3px solid rgba(200,28,40,0.06);
+  position: sticky; top: 0; z-index: 10;
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.brand { display: flex; align-items: center; gap: .8rem; }
+.logo { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 18px rgba(200,24,35,0.08); }
+.site-title { margin: 0; font-size: 1.1rem; }
+.site-sub { margin: 0; font-size: .85rem; color: var(--muted); }
 
-.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.5rem;align-items:center}
-.nav a{display:inline-block;padding:.5rem .75rem;color:var(--dark);text-decoration:none;border-radius:6px}
-.nav a:hover,.nav a:focus{background:#f2f5f7}
-.nav .cta{background:var(--accent);color:#fff}
+/* Navigation */
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: .5rem; align-items: center; }
+.nav a { display: inline-block; padding: .5rem .75rem; color: var(--dark); text-decoration: none; border-radius: 6px; }
+.nav a:hover, .nav a:focus { background: linear-gradient(90deg, rgba(200,24,35,0.06), rgba(10,122,63,0.04)); }
+.nav .cta { background: linear-gradient(90deg, var(--accent), var(--gold)); color: #fff; border: none; }
 
-/* Hero */
-.hero{background:linear-gradient(180deg, #fff 0%, #fcfbf9 100%);padding:2rem 0}
-.hero-inner{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;align-items:center}
-.hero-text h2{margin:0 0 .5rem;font-size:1.6rem}
-.lead{margin:0 0 1rem;color:var(--muted)}
-.hero-ctas{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem}
-.btn{display:inline-block;padding:.6rem .9rem;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid transparent}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-outline{background:transparent;border-color:var(--accent);color:var(--accent)}
-.meta{font-size:.85rem;color:var(--muted)}
+/* Hero area - wintery sand and ornament accent */
+.hero {
+  background: linear-gradient(180deg, rgba(255,250,245,0.95) 0%, #fbfbfc 100%);
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -60px; top: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0) 40%),
+              conic-gradient(from 120deg at 50% 50%, rgba(201,24,35,0.15), rgba(10,122,63,0.15));
+  transform: rotate(18deg); border-radius: 50%; opacity: 0.95; pointer-events: none;
+}
+.hero-inner { display: grid; grid-template-columns: 1fr 320px; gap: 1.25rem; align-items: center; z-index: 1; }
+.hero-text h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+.lead { margin: 0 0 1rem; color: var(--muted); }
+.hero-ctas { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.btn { display: inline-block; padding: .6rem .9rem; border-radius: 8px; text-decoration: none; font-weight: 600; border: 1px solid transparent; }
+.btn-primary { background: linear-gradient(90deg, var(--accent), var(--gold)); color: #fff; box-shadow: 0 6px 18px rgba(201,24,35,0.12); }
+.btn-outline { background: transparent; border-color: var(--accent2); color: var(--accent2); box-shadow: none; }
+.meta { font-size: .85rem; color: var(--muted); }
 
-/* Hero card */
-.hero-card{background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(16,24,40,0.06);overflow:hidden}
-.card-top{background:linear-gradient(90deg,var(--accent),#ffb068);color:#fff;padding:.6rem;font-weight:700}
-.card-body{padding:1rem}
-.countdown{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
-.venue{color:var(--muted);font-size:.9rem}
+/* Hero card - event badge with festive border */
+.hero-card {
+  background: linear-gradient(180deg, #fff 0%, #fffaf6 100%);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(16,24,40,0.08);
+  overflow: hidden;
+  border: 3px solid rgba(10,122,63,0.06);
+}
+.card-top { background: linear-gradient(90deg, var(--accent), var(--gold)); color: #fff; padding: .6rem; font-weight: 700; }
+.card-body { padding: 1rem; }
+.countdown { font-size: 1.2rem; font-weight: 700; margin-bottom: .5rem; color: var(--accent); }
+.venue { color: var(--muted); font-size: .9rem; }
 
 /* Sections */
-.section{padding:1.25rem 0}
-.section h3{margin:0 0 .75rem}
+.section { padding: 1.25rem 0; }
+.section h3 { margin: 0 0 .75rem; }
 
-/* Schedule table */
-.schedule-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 4px 16px rgba(16,24,40,0.04)}
-.schedule-table thead{background:#fafafa;color:var(--muted)}
-.schedule-table th,.schedule-table td{padding:.75rem;text-align:left;border-bottom:1px solid #f0f0f0}
+/* Schedule table - festive header stripe */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(180deg, #fff, #fffaf6);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.04);
+}
+.schedule-table thead { background: linear-gradient(90deg, rgba(10,122,63,0.06), rgba(201,24,35,0.06)); color: var(--muted); }
+.schedule-table th, .schedule-table td { padding: .75rem; text-align: left; border-bottom: 1px solid #f0f0f0; }
 
-/* Cards */
-.cards{display:flex;gap:1rem;flex-wrap:wrap}
-.team-card{flex:1 1 220px;background:#fff;padding:1rem;border-radius:8px;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+/* Cards - team cards look like little gift cards */
+.cards { display: flex; gap: 1rem; flex-wrap: wrap; }
+.team-card {
+  flex: 1 1 220px;
+  background: linear-gradient(180deg, #fff, #fffaf6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.04);
+  border-top: 3px solid rgba(201,24,35,0.05);
+}
 
-/* Form */
-.form{background:#fff;padding:1rem;border-radius:8px;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
-.form label{display:block;margin:.5rem 0 .25rem;font-weight:600}
-.form input[type="text"],.form input[type="email"],.form select{width:100%;padding:.6rem;border:1px solid #e6e9ee;border-radius:6px}
-.form fieldset{border:0;padding:0;margin:0 0 1rem}
-.form-actions{display:flex;gap:.5rem;margin-top:.5rem}
-
-.form-message{margin-top:.75rem;color:green;font-weight:600}
-.muted{color:var(--muted)}
+/* Form - subtle holiday styling */
+.form {
+  background: linear-gradient(180deg, #fff, #fffaf6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.04);
+}
+.form label { display: block; margin: .5rem 0 .25rem; font-weight: 600; }
+.form input[type="text"], .form input[type="email"], .form select {
+  width: 100%; padding: .6rem; border: 1px solid #e6e9ee; border-radius: 6px;
+}
+.form fieldset { border: 0; padding: 0; margin: 0 0 1rem; }
+.form-actions { display: flex; gap: .5rem; margin-top: .5rem; }
+.form-message { margin-top: .75rem; color: green; font-weight: 600; }
+.muted { color: var(--muted); }
 
 /* Venue */
-.venue-grid{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start}
-.map iframe{width:100%;height:220px;border:0;border-radius:8px}
+.venue-grid { display: grid; grid-template-columns: 1fr 320px; gap: 1rem; align-items: start; }
+.map iframe { width: 100%; height: 220px; border: 0; border-radius: 8px; }
 
-/* Footer */
-.site-footer{padding:1rem 0;background:#fff;border-top:1px solid #eee;margin-top:2rem}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.social{list-style:none;margin:0;padding:0;display:flex;gap:.5rem}
-.social a{display:inline-block;padding:.35rem .6rem;border-radius:6px;background:#f6f7f8;text-decoration:none;color:var(--muted);font-weight:700}
+/* Footer - festive but subtle */
+.site-footer {
+  padding: 1rem 0;
+  background: linear-gradient(90deg, rgba(10,122,63,0.02), rgba(201,24,35,0.02));
+  border-top: 1px solid #eee;
+  margin-top: 2rem;
+}
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.social { list-style: none; margin: 0; padding: 0; display: flex; gap: .5rem; }
+.social a {
+  display: inline-block; padding: .35rem .6rem; border-radius: 6px;
+  background: linear-gradient(90deg, #fff, #fffaf6); text-decoration: none; color: var(--muted); font-weight: 700;
+}
 
-/* Responsive */
-@media (max-width:900px){
-  .hero-inner{grid-template-columns:1fr}
-  .venue-grid{grid-template-columns:1fr}
-  .container{padding:1rem}
-  .header-inner{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .nav ul{flex-wrap:wrap}
+/* Snowfall animation - decorative, lightweight */
+@keyframes drift {
+  0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh) translateX(30vw) rotate(360deg); opacity: 0.9; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .venue-grid { grid-template-columns: 1fr; }
+  .container { padding: 1rem; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .nav ul { flex-wrap: wrap; }
 }
