@@ -5,74 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scrollable Gallery with Arrows</title>
 <style>
-.gallery-wrapper {
-  position: relative;
-  max-width: 90%;
-  margin: 20px auto;
-}
-.gallery-container {
-  display: flex;
-  overflow-x: hidden;
-  gap: 10px;
-  scroll-behavior: smooth;
-}
-.gallery-item {
-  flex: 0 0 auto;
-  width: 250px;
-  height: 150px;
-  border-radius: 10px;
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
-}
-.gallery-item:hover { transform: scale(1.05); }
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  font-size: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.arrow-left { left: -20px; }
-.arrow-right { right: -20px; }
-</style>
-</head>
-<body>
-
-<h2 style="text-align:center;">Gallery</h2>
-<div class="gallery-wrapper">
-  <button class="arrow arrow-left" onclick="scrollGallery(-1)">&#10094;</button>
-  <div class="gallery-container" id="gallery">
-    <img src="ag_bvt23_1.jpg" class="gallery-item" alt="Image_1">
-    <img src="ag_bvt23_13.jpg" class="gallery-item" alt="Image_2">
-    <img src="ag_bvt23_4.jpg" class="gallery-item" alt="Image_3">
-    <img src="ag_bvt23_6.jpg" class="gallery-item" alt="Image_4">
-    <img src="ag_bvt23_7.jpg" class="gallery-item" alt="Image_5">
-    
-  </div>
-  <button class="arrow arrow-right" onclick="scrollGallery(1)">&#10095;</button>
-</div>
-
-<script>
-  const gallery = document.getElementById('gallery');
-  const scrollAmount = 260;
-
-  function scrollGallery(direction) {
-    gallery.scrollBy({
-      left: direction * scrollAmount,
-      behavior: 'smooth'
-    });
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    background: #f5f5f5;
   }
-</script>
-  
-</body>
-</html>
+
+  .gallery-wrapper {
+    position: relative;
+    max-width: 90%;
+    margin: 20px auto;
+  }
+
+  .gallery-container {
+    display: flex;
+    overflow-x: hidden;
+    gap: 10px;
+    scroll-behavior: smooth;
+  }
+
+  .gallery-item {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-rad
