@@ -10,98 +10,32 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-    .site-header {
-      background: linear-gradient(90deg, #ff7a18, #af002d 70%);
-      color: white;
-      padding: 20px 0;
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .logo {
-      width: 60px;
-      height: 60px;
-    }
-    h1 {
-      margin: 0;
-      font-size: 1.4rem;
-    }
-    p {
-      margin: 0;
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    #countdown {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-top: 15px;
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-
-  <header class="site-header">
+<header class="site-header">
     <div class="container header-inner">
       <div class="brand">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ff7a18'/%3E%3Cpath d='M20 28c6-6 22-6 28 0-6 6-22 6-28 0z' fill='%23fff'/%3E%3C/svg%3E" 
-             alt="VolleyFest logo" class="logo" />
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ff7a18'/%3E%3Cpath d='M20 28c6-6 22-6 28 0-6 6-22 6-28 0z' fill='%23fff'/%3E%3C/svg%3E" alt="VolleyFest logo" class="logo" />
         <div>
           <h1 class="site-title">AG Christmas Beach Volley Tournament 07.12.2025</h1>
-          <p class="site-sub">December 07, 2025 • Hiekka Volley Club, Vantaa / Varisto</p>
-          <div id="countdown"></div>
+          <p class="site-sub">December 07.12.2025 • Hiekka Volley club / Vantaa, Varisto</p>
         </div>
       </div>
+      <nav class="nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#teams">Teams</a></li>
+          <li><a href="#register" class="cta">Register</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
-
-  <script>
-    // Set the target date and time
-    const targetDate = new Date("December 7, 2025 10:00:00").getTime();
-
-    const countdownElement = document.getElementById("countdown");
-
-    const timer = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      // Time calculations
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      // Display result
-      countdownElement.innerHTML = 
-        `Starts in ${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-      // If the countdown is over
-      if (distance < 0) {
-        clearInterval(timer);
-        countdownElement.innerHTML = "The tournament has started!";
-      }
-    }, 1000);
-  </script>
 
   <main id="main">
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-text">
           <h2>Bring your best game. Compete. Learn. Celebrate.</h2>
-          <p class="lead">Open divisions for Mixed-teams (M+W)  </p>
+          <p class="lead">Open divisions for Mix-teams (M+W)  </p>
           <div class="hero-ctas">
             <a class="btn btn-primary" href="#register">Register a Team</a>
             <a class="btn btn-outline" href="#schedule">See Schedule</a>
@@ -117,6 +51,7 @@
         </div>
       </div>
     </section>
+
 
     <section id="about" class="container section about">
       <h3>About the Event</h3>
