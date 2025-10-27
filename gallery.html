@@ -24,15 +24,16 @@
     scroll-behavior: smooth;
   }
 
+  /* Images scaled to 75% of original (250x150) */
   .gallery-item {
     flex: 0 0 auto;
-    width: 250px;
-    height: 150px;
+    width: 188px;   /* 75% of 250px */
+    height: 113px;  /* 75% of 150px */
     border-radius: 10px;
     object-fit: cover;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     transition: transform 0.2s;
-    cursor: pointer;
+    cursor: default; /* no click interaction */
   }
 
   .gallery-item:hover {
@@ -46,4 +47,49 @@
     background-color: rgba(0,0,0,0.5);
     color: white;
     border: none;
-    border-rad
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .arrow-left { left: -20px; }
+  .arrow-right { right: -20px; }
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Gallery</h2>
+
+<div class="gallery-wrapper">
+  <button class="arrow arrow-left" onclick="scrollGallery(-1)">&#10094;</button>
+  <div class="gallery-container" id="gallery">
+    <img src="ag_bvt23_1.jpg" class="gallery-item" alt="Image 1">
+    <img src="ag_bvt23_13.jpg" class="gallery-item" alt="Image 2">
+    <img src="ag_bvt23_4.jpg" class="gallery-item" alt="Image 3">
+    <img src="ag_bvt23_6.jpg" class="gallery-item" alt="Image 4">
+    <img src="ag_bvt23_7.jpg" class="gallery-item" alt="Image 5">
+  </div>
+  <button class="arrow arrow-right" onclick="scrollGallery(1)">&#10095;</button>
+</div>
+
+<script>
+const gallery = document.getElementById('gallery');
+const scrollAmount = 195; // roughly width of one image + gap
+
+function scrollGallery(direction) {
+  gallery.scrollBy({
+    left: direction * scrollAmount,
+    behavior: 'smooth'
+  });
+}
+</script>
+
+</body>
+</html>
+
