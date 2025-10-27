@@ -47,4 +47,47 @@
 
   .gallery-scroll img {
     flex: 0 0 auto;
-    width: 700px;           /* large enough for visibility*
+    width: 700px;           /* large enough for visibility */
+    height: 650px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-scroll img:hover {
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    .gallery-scroll img {
+      width: 90vw;
+      height: auto;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<h1>AG Beach Volley Tournament Gallery</h1>
+
+<div class="gallery-scroll">
+  <img src="ag_bvt23_1.jpg" alt="Tournament photo 1">
+  <img src="ag_bvt23_2.jpg" alt="Tournament photo 2">
+  <img src="ag_bvt23_3.jpg" alt="Tournament photo 3">
+  <img src="ag_bvt23_4.jpg" alt="Tournament photo 4">
+  <img src="ag_bvt23_5.jpg" alt="Tournament photo 5">
+  <img src="ag_bvt23_6.jpg" alt="Tournament photo 6">
+  <img src="ag_bvt23_7.jpg" alt="Tournament photo 7">
+  <img src="ag_bvt23_8.jpg" alt="Tournament photo 8">
+  <img src="ag_bvt23_9.jpg" alt="Tournament photo 9">
+  <img src="ag_bvt23_10.jpg" alt="Tournament photo 10">
+  <img src="ag_bvt23_11.jpg" alt="Tournament photo 11">
+  <img src="ag_bvt23_12.jpg" alt="Tournament photo 12">
+  <img src="ag_bvt23_14.jpg" alt="Tournament photo 14">
+  <img src="ag_bvt23_15.jpg" alt="Tournament photo 15">
+</div>
+
+</body>
+</html>
