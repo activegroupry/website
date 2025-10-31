@@ -51,6 +51,37 @@
           </div>
         </div>
       </div>
+  <script>
+// Устанавливаем дату турнира (7 декабря 2025 года в 10:00 по местному времени)
+const tournamentDate = new Date("2025-12-07T10:00:00");
+
+// Обновляем таймер каждую секунду
+const countdownEl = document.getElementById("countdown");
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = tournamentDate - now;
+
+  if (diff <= 0) {
+    countdownEl.textContent = "The tournament has started!";
+    clearInterval(timer);
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+updateCountdown();
+const timer = setInterval(updateCountdown, 1000);
+</script>
+    
+    
+    
     </section>
 
 
