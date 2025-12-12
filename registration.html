@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Регистрация на мероприятие</title>
+<title>Регистрация на волейбол 19.12.2025</title>
 <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     #registerForm { display: none; margin-top: 15px; }
@@ -45,11 +45,43 @@
 
 <div id="lockIcon">🔒</div>
 
+}
 <div id="adminLogin">
-    <input type="password" id="adminPass" placeholder="Пароль">
+    <input type="password" id="adminPass" placeholder="">
     <button id="checkPassBtn">Войти</button>
 </div>
+    
+<style>
+    /* Уменьшение иконки замка в 3 раза */
+    #lockIcon {
+        font-size: 8px; /* уменьшенная иконка */
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 
+    /* Форма администратора */
+    #adminLogin {
+        display: none;
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        background: #fff;
+        padding: 5px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+    }
+
+    #adminLogin input {
+        width: 100px;
+        margin-right: 5px;
+    }
+
+    #adminLogin button {
+        padding: 2px 6px;
+    }
+</style>
 <h2>Регистрация на мероприятие</h2>
 
 <div id="placeInfo"></div>
