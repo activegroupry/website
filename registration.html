@@ -43,10 +43,8 @@
 </head>
 <body>
 
-<!-- Значок замка -->
 <div id="lockIcon">🔒</div>
 
-<!-- Форма входа администратора -->
 <div id="adminLogin">
     <input type="password" id="adminPass" placeholder="Пароль">
     <button id="checkPassBtn">Войти</button>
@@ -65,7 +63,6 @@
     <button id="confirmBtn">Подтвердить</button>
 </div>
 
-<!-- Админ-панель -->
 <div id="adminPanel" class="admin-panel">
     <h3>Панель администратора</h3>
 
@@ -86,12 +83,11 @@
 </div>
 
 <script>
-// Данные
+// Настройки
 let maxSeats = 12;
-let availableSeats = 12;
 let participants = [];
 
-// Элементы
+// Элементы UI
 const placeInfo = document.getElementById("placeInfo");
 const openRegBtn = document.getElementById("openRegBtn");
 const registerForm = document.getElementById("registerForm");
@@ -109,12 +105,27 @@ const adminAddBtn = document.getElementById("adminAddBtn");
 
 const resetBtn = document.getElementById("resetBtn");
 
-// Обновление количества мест
+
+// ************* LOCAL STORAGE: Загрузка данных *************
+function loadFromStorage() {
+    const saved = localStorage.getItem("participantsList");
+    if (saved) {
+        participants = JSON.parse(saved);
+    }
+}
+
+// ************* LOCAL STORAGE: Сохранение данных *************
+function saveToStorage() {
+    localStorage.setItem("participantsList", JSON.stringify(participants));
+}
+
+
+// Количество мест
 function updatePlaces() {
-    availableSeats = maxSeats - participants.length;
+    const availableSeats = maxSeats - participants.length;
     placeInfo.textContent = `${availableSeats}/${maxSeats} мест доступно`;
 
-    if (availableSeats === 0) {
+    if (availableSeats <= 0) {
         openRegBtn.disabled = true;
         registerForm.style.display = "none";
     } else {
@@ -122,7 +133,7 @@ function updatePlaces() {
     }
 }
 
-// Обновление списка участников (публичный блок)
+// Вывод списка участников (публичный)
 function updateParticipants() {
     participantList.innerHTML = "";
     participants.forEach(p => {
@@ -132,7 +143,7 @@ function updateParticipants() {
     });
 }
 
-// Обновление списка в админ-панели (редактирование/удаление)
+// Вывод списка участников в админ-панели
 function updateAdminParticipants() {
     adminParticipants.innerHTML = "";
 
@@ -149,8 +160,9 @@ function updateAdminParticipants() {
         saveBtn.textContent = "Сохранить";
         saveBtn.className = "small-btn";
         saveBtn.onclick = () => {
-            participants[index] = input.value.trim();
-            if (!participants[index]) return;
+            const newName = input.value.trim();
+            if (!newName) return;
+            participants[index] = newName;
             refreshAll();
         };
 
@@ -169,11 +181,12 @@ function updateAdminParticipants() {
     });
 }
 
-// Полное обновление UI
+// Полное обновление интерфейса
 function refreshAll() {
     updatePlaces();
     updateParticipants();
     updateAdminParticipants();
+    saveToStorage(); // LOCAL STORAGE: сохраняем при каждом изменении
 }
 
 // Пользовательская регистрация
@@ -190,7 +203,7 @@ confirmBtn.addEventListener("click", () => {
         return;
     }
 
-    if (availableSeats <= 0) return;
+    if (participants.length >= maxSeats) return;
 
     participants.push(`${first} ${last}`);
 
@@ -201,12 +214,11 @@ confirmBtn.addEventListener("click", () => {
     refreshAll();
 });
 
-// Админ: показать/скрыть форму входа
+// Админ вход
 lockIcon.addEventListener("click", () => {
     adminLogin.style.display = adminLogin.style.display === "block" ? "none" : "block";
 });
 
-// Админ: вход
 checkPassBtn.addEventListener("click", () => {
     const pass = document.getElementById("adminPass").value;
 
@@ -219,33 +231,34 @@ checkPassBtn.addEventListener("click", () => {
     }
 });
 
-// Админ: добавление нового участника вручную
+// Админ добавляет участника вручную
 adminAddBtn.addEventListener("click", () => {
     const name = adminAddName.value.trim();
     if (!name) return;
 
-    if (availableSeats <= 0) {
+    if (participants.length >= maxSeats) {
         alert("Нет свободных мест.");
         return;
     }
 
     participants.push(name);
     adminAddName.value = "";
+
     refreshAll();
 });
 
-// Админ: полный сброс
+// Полный сброс
 resetBtn.addEventListener("click", () => {
-    if (confirm("Вы уверены, что хотите обнулить список участников?")) {
+    if (confirm("Вы уверены, что хотите обнулить список?")) {
         participants = [];
         refreshAll();
     }
 });
 
-// Инициализация
+// ************* Инициализация *************
+loadFromStorage(); // загружаем список при запуске
 refreshAll();
 </script>
 
 </body>
 </html>
-
