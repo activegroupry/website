@@ -7,10 +7,50 @@
     body { font-family: Arial, sans-serif; padding: 20px; }
     #registerForm { display: none; margin-top: 15px; }
     #participants { margin-top: 20px; }
-    .hidden { display: none; }
+    .admin-panel { display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; }
+    .admin-btn { padding: 6px 12px; margin-top: 5px; }
+    #lockIcon {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    #adminLogin {
+        display: none;
+        position: absolute;
+        top: 45px;
+        right: 20px;
+        background: #fff;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+    .edit-input {
+        width: 200px;
+        margin-right: 5px;
+    }
+    .participant-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+    .small-btn {
+        padding: 2px 6px;
+        font-size: 12px;
+    }
 </style>
 </head>
 <body>
+
+<!-- Значок замка -->
+<div id="lockIcon">🔒</div>
+
+<!-- Форма входа администратора -->
+<div id="adminLogin">
+    <input type="password" id="adminPass" placeholder="Пароль">
+    <button id="checkPassBtn">Войти</button>
+</div>
 
 <h2>Регистрация на мероприятие</h2>
 
@@ -25,35 +65,64 @@
     <button id="confirmBtn">Подтвердить</button>
 </div>
 
+<!-- Админ-панель -->
+<div id="adminPanel" class="admin-panel">
+    <h3>Панель администратора</h3>
+
+    <h4>Добавить нового участника вручную</h4>
+    <input type="text" id="adminAddName" placeholder="Имя Фамилия" class="edit-input">
+    <button id="adminAddBtn" class="small-btn">Добавить</button>
+
+    <h4 style="margin-top:20px;">Редактировать или удалить участников</h4>
+    <div id="adminParticipants"></div>
+
+    <h4 style="margin-top:20px;">Прочее</h4>
+    <button id="resetBtn" class="admin-btn">Обнулить список</button>
+</div>
+
 <div id="participants">
     <h3>Список участников:</h3>
     <ul id="participantList"></ul>
 </div>
 
 <script>
-// Конфигурация
+// Данные
 let maxSeats = 12;
 let availableSeats = 12;
 let participants = [];
 
-// Элементы страницы
+// Элементы
 const placeInfo = document.getElementById("placeInfo");
 const openRegBtn = document.getElementById("openRegBtn");
 const registerForm = document.getElementById("registerForm");
 const confirmBtn = document.getElementById("confirmBtn");
 const participantList = document.getElementById("participantList");
 
-// Обновление отображения количества мест
+const lockIcon = document.getElementById("lockIcon");
+const adminLogin = document.getElementById("adminLogin");
+const checkPassBtn = document.getElementById("checkPassBtn");
+const adminPanel = document.getElementById("adminPanel");
+const adminParticipants = document.getElementById("adminParticipants");
+
+const adminAddName = document.getElementById("adminAddName");
+const adminAddBtn = document.getElementById("adminAddBtn");
+
+const resetBtn = document.getElementById("resetBtn");
+
+// Обновление количества мест
 function updatePlaces() {
+    availableSeats = maxSeats - participants.length;
     placeInfo.textContent = `${availableSeats}/${maxSeats} мест доступно`;
 
     if (availableSeats === 0) {
         openRegBtn.disabled = true;
         registerForm.style.display = "none";
+    } else {
+        openRegBtn.disabled = false;
     }
 }
 
-// Отображение списка участников
+// Обновление списка участников (публичный блок)
 function updateParticipants() {
     participantList.innerHTML = "";
     participants.forEach(p => {
@@ -63,12 +132,55 @@ function updateParticipants() {
     });
 }
 
-// Кнопка "Регистрация"
+// Обновление списка в админ-панели (редактирование/удаление)
+function updateAdminParticipants() {
+    adminParticipants.innerHTML = "";
+
+    participants.forEach((p, index) => {
+        const div = document.createElement("div");
+        div.className = "participant-item";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = p;
+        input.className = "edit-input";
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "Сохранить";
+        saveBtn.className = "small-btn";
+        saveBtn.onclick = () => {
+            participants[index] = input.value.trim();
+            if (!participants[index]) return;
+            refreshAll();
+        };
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Удалить";
+        delBtn.className = "small-btn";
+        delBtn.onclick = () => {
+            participants.splice(index, 1);
+            refreshAll();
+        };
+
+        div.appendChild(input);
+        div.appendChild(saveBtn);
+        div.appendChild(delBtn);
+        adminParticipants.appendChild(div);
+    });
+}
+
+// Полное обновление UI
+function refreshAll() {
+    updatePlaces();
+    updateParticipants();
+    updateAdminParticipants();
+}
+
+// Пользовательская регистрация
 openRegBtn.addEventListener("click", () => {
     registerForm.style.display = "block";
 });
 
-// Кнопка "Подтвердить"
 confirmBtn.addEventListener("click", () => {
     const first = document.getElementById("firstName").value.trim();
     const last = document.getElementById("lastName").value.trim();
@@ -78,25 +190,62 @@ confirmBtn.addEventListener("click", () => {
         return;
     }
 
-    // Добавляем участника
+    if (availableSeats <= 0) return;
+
     participants.push(`${first} ${last}`);
-    availableSeats -= 1;
 
-    // Обновляем интерфейс
-    updatePlaces();
-    updateParticipants();
-
-    // Очищаем поля формы
     document.getElementById("firstName").value = "";
     document.getElementById("lastName").value = "";
-
-    // Прячем форму после отправки
     registerForm.style.display = "none";
+
+    refreshAll();
+});
+
+// Админ: показать/скрыть форму входа
+lockIcon.addEventListener("click", () => {
+    adminLogin.style.display = adminLogin.style.display === "block" ? "none" : "block";
+});
+
+// Админ: вход
+checkPassBtn.addEventListener("click", () => {
+    const pass = document.getElementById("adminPass").value;
+
+    if (pass === "Active") {
+        adminLogin.style.display = "none";
+        adminPanel.style.display = "block";
+        refreshAll();
+    } else {
+        alert("Неверный пароль.");
+    }
+});
+
+// Админ: добавление нового участника вручную
+adminAddBtn.addEventListener("click", () => {
+    const name = adminAddName.value.trim();
+    if (!name) return;
+
+    if (availableSeats <= 0) {
+        alert("Нет свободных мест.");
+        return;
+    }
+
+    participants.push(name);
+    adminAddName.value = "";
+    refreshAll();
+});
+
+// Админ: полный сброс
+resetBtn.addEventListener("click", () => {
+    if (confirm("Вы уверены, что хотите обнулить список участников?")) {
+        participants = [];
+        refreshAll();
+    }
 });
 
 // Инициализация
-updatePlaces();
+refreshAll();
 </script>
 
 </body>
 </html>
+
