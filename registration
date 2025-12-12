@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Регистрация на мероприятие</title>
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #registerForm { display: none; margin-top: 15px; }
+    #participants { margin-top: 20px; }
+    .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<h2>Регистрация на мероприятие</h2>
+
+<div id="placeInfo"></div>
+
+<button id="openRegBtn">Регистрация</button>
+
+<div id="registerForm">
+    <h3>Введите данные</h3>
+    <input type="text" id="firstName" placeholder="Имя"><br><br>
+    <input type="text" id="lastName" placeholder="Фамилия"><br><br>
+    <button id="confirmBtn">Подтвердить</button>
+</div>
+
+<div id="participants">
+    <h3>Список участников:</h3>
+    <ul id="participantList"></ul>
+</div>
+
+<script>
+// Конфигурация
+let maxSeats = 12;
+let availableSeats = 12;
+let participants = [];
+
+// Элементы страницы
+const placeInfo = document.getElementById("placeInfo");
+const openRegBtn = document.getElementById("openRegBtn");
+const registerForm = document.getElementById("registerForm");
+const confirmBtn = document.getElementById("confirmBtn");
+const participantList = document.getElementById("participantList");
+
+// Обновление отображения количества мест
+function updatePlaces() {
+    placeInfo.textContent = `${availableSeats}/${maxSeats} мест доступно`;
+
+    if (availableSeats === 0) {
+        openRegBtn.disabled = true;
+        registerForm.style.display = "none";
+    }
+}
+
+// Отображение списка участников
+function updateParticipants() {
+    participantList.innerHTML = "";
+    participants.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        participantList.appendChild(li);
+    });
+}
+
+// Кнопка "Регистрация"
+openRegBtn.addEventListener("click", () => {
+    registerForm.style.display = "block";
+});
+
+// Кнопка "Подтвердить"
+confirmBtn.addEventListener("click", () => {
+    const first = document.getElementById("firstName").value.trim();
+    const last = document.getElementById("lastName").value.trim();
+
+    if (!first || !last) {
+        alert("Введите имя и фамилию.");
+        return;
+    }
+
+    // Добавляем участника
+    participants.push(`${first} ${last}`);
+    availableSeats -= 1;
+
+    // Обновляем интерфейс
+    updatePlaces();
+    updateParticipants();
+
+    // Очищаем поля формы
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+
+    // Прячем форму после отправки
+    registerForm.style.display = "none";
+});
+
+// Инициализация
+updatePlaces();
+</script>
+
+</body>
+</html>
