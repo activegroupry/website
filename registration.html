@@ -75,6 +75,10 @@
 
     <h4 style="margin-top:20px;">Прочее</h4>
     <button id="resetBtn" class="admin-btn">Обнулить список</button>
+
+    <br><br>
+    <!-- Новая кнопка подтверждения изменений -->
+    <button id="applyChangesBtn" class="admin-btn">Подтвердить изменения</button>
 </div>
 
 <div id="participants">
@@ -87,7 +91,7 @@
 let maxSeats = 12;
 let participants = [];
 
-// Элементы UI
+// Элементы интерфейса
 const placeInfo = document.getElementById("placeInfo");
 const openRegBtn = document.getElementById("openRegBtn");
 const registerForm = document.getElementById("registerForm");
@@ -99,6 +103,7 @@ const adminLogin = document.getElementById("adminLogin");
 const checkPassBtn = document.getElementById("checkPassBtn");
 const adminPanel = document.getElementById("adminPanel");
 const adminParticipants = document.getElementById("adminParticipants");
+const applyChangesBtn = document.getElementById("applyChangesBtn");
 
 const adminAddName = document.getElementById("adminAddName");
 const adminAddBtn = document.getElementById("adminAddBtn");
@@ -106,7 +111,7 @@ const adminAddBtn = document.getElementById("adminAddBtn");
 const resetBtn = document.getElementById("resetBtn");
 
 
-// ************* LOCAL STORAGE: Загрузка данных *************
+// **************** LOCAL STORAGE ****************
 function loadFromStorage() {
     const saved = localStorage.getItem("participantsList");
     if (saved) {
@@ -114,26 +119,22 @@ function loadFromStorage() {
     }
 }
 
-// ************* LOCAL STORAGE: Сохранение данных *************
 function saveToStorage() {
     localStorage.setItem("participantsList", JSON.stringify(participants));
 }
 
 
-// Количество мест
+// **************** ОБНОВЛЕНИЕ UI ****************
 function updatePlaces() {
     const availableSeats = maxSeats - participants.length;
     placeInfo.textContent = `${availableSeats}/${maxSeats} мест доступно`;
 
+    openRegBtn.disabled = availableSeats <= 0;
     if (availableSeats <= 0) {
-        openRegBtn.disabled = true;
         registerForm.style.display = "none";
-    } else {
-        openRegBtn.disabled = false;
     }
 }
 
-// Вывод списка участников (публичный)
 function updateParticipants() {
     participantList.innerHTML = "";
     participants.forEach(p => {
@@ -143,7 +144,6 @@ function updateParticipants() {
     });
 }
 
-// Вывод списка участников в админ-панели
 function updateAdminParticipants() {
     adminParticipants.innerHTML = "";
 
@@ -156,14 +156,8 @@ function updateAdminParticipants() {
         input.value = p;
         input.className = "edit-input";
 
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "Сохранить";
-        saveBtn.className = "small-btn";
-        saveBtn.onclick = () => {
-            const newName = input.value.trim();
-            if (!newName) return;
-            participants[index] = newName;
-            refreshAll();
+        input.oninput = () => {
+            participants[index] = input.value;
         };
 
         const delBtn = document.createElement("button");
@@ -175,21 +169,20 @@ function updateAdminParticipants() {
         };
 
         div.appendChild(input);
-        div.appendChild(saveBtn);
         div.appendChild(delBtn);
         adminParticipants.appendChild(div);
     });
 }
 
-// Полное обновление интерфейса
 function refreshAll() {
     updatePlaces();
     updateParticipants();
     updateAdminParticipants();
-    saveToStorage(); // LOCAL STORAGE: сохраняем при каждом изменении
+    saveToStorage();
 }
 
-// Пользовательская регистрация
+
+// **************** ФОРМА РЕГИСТРАЦИИ ****************
 openRegBtn.addEventListener("click", () => {
     registerForm.style.display = "block";
 });
@@ -214,9 +207,21 @@ confirmBtn.addEventListener("click", () => {
     refreshAll();
 });
 
-// Админ вход
+
+// **************** АДМИНИСТРАТОР ****************
 lockIcon.addEventListener("click", () => {
-    adminLogin.style.display = adminLogin.style.display === "block" ? "none" : "block";
+    adminLogin.style.display =
+        adminLogin.style.display === "block" ? "none" : "block";
+});
+
+// Скрытие формы пароля при клике в любое место
+document.addEventListener("click", function(event) {
+    const isInsideLogin = adminLogin.contains(event.target);
+    const isLock = lockIcon.contains(event.target);
+
+    if (!isInsideLogin && !isLock) {
+        adminLogin.style.display = "none";
+    }
 });
 
 checkPassBtn.addEventListener("click", () => {
@@ -231,7 +236,7 @@ checkPassBtn.addEventListener("click", () => {
     }
 });
 
-// Админ добавляет участника вручную
+// Добавление участника вручную
 adminAddBtn.addEventListener("click", () => {
     const name = adminAddName.value.trim();
     if (!name) return;
@@ -243,24 +248,30 @@ adminAddBtn.addEventListener("click", () => {
 
     participants.push(name);
     adminAddName.value = "";
-
     refreshAll();
 });
 
 // Полный сброс
 resetBtn.addEventListener("click", () => {
-    if (confirm("Вы уверены, что хотите обнулить список?")) {
-        participants = [];
-        refreshAll();
-    }
+    if (!confirm("Вы уверены, что хотите обнулить список?")) return;
+
+    participants = [];
+    refreshAll();
 });
 
-// ************* Инициализация *************
-loadFromStorage(); // загружаем список при запуске
+
+// *************** НОВАЯ КНОПКА "ПОДТВЕРДИТЬ ИЗМЕНЕНИЯ" ***************
+applyChangesBtn.addEventListener("click", () => {
+    saveToStorage();      // сохраняем
+    adminPanel.style.display = "none"; // закрываем панель
+    refreshAll();         // обновляем интерфейс
+});
+
+
+// **************** ИНИЦИАЛИЗАЦИЯ ****************
+loadFromStorage();
 refreshAll();
 </script>
 
 </body>
 </html>
-
-
