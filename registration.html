@@ -50,7 +50,6 @@
     <button id="checkPassBtn">Войти</button>
 </div>
 
-    
 <h2>Регистрация на мероприятие</h2>
 
 <div id="placeInfo"></div>
@@ -120,15 +119,6 @@ function saveToStorage() {
     localStorage.setItem("participantsList", JSON.stringify(participants));
 }
 
-// Скрытие панели ввода пароля при клике в любое место вне её
-document.addEventListener("click", function(event) {
-    const isClickInsideLogin = adminLogin.contains(event.target);
-    const isClickOnLock = lockIcon.contains(event.target);
-
-    if (!isClickInsideLogin && !isClickOnLock) {
-        adminLogin.style.display = "none";
-    }
-});
 
 // Количество мест
 function updatePlaces() {
@@ -272,3 +262,5 @@ refreshAll();
 
 </body>
 </html>
+
+
