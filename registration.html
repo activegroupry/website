@@ -222,12 +222,21 @@ confirmBtn.addEventListener("click", () => {
     const first = document.getElementById("firstName").value.trim();
     const last = document.getElementById("lastName").value.trim();
 
-    if (!first || !last) {
-        alert("Введите имя и фамилию.");
+    // Проверка минимальной длины
+    if (first.length < 3) {
+        alert("Имя должно содержать минимум 3 буквы.");
         return;
     }
 
-    if (participants.length >= maxSeats) return;
+    if (last.length < 5) {
+        alert("Фамилия должна содержать минимум 5 букв.");
+        return;
+    }
+
+    if (participants.length >= maxSeats) {
+        alert("Все места заняты.");
+        return;
+    }
 
     participants.push(`${first} ${last}`);
 
@@ -235,7 +244,7 @@ confirmBtn.addEventListener("click", () => {
     document.getElementById("lastName").value = "";
     registerForm.style.display = "none";
 
-    refreshAll();
+    refreshAll(); // обновление списка участников и количества мест
 });
 
 
