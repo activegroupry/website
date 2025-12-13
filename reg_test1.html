@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Регистрация на волейбол 19.12.2025</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; background: #f2f2f2; }
+
+.registration-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.registration-block {
+    width: 250px;
+    height: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.registration-block.active {
+    border: 2px solid #007BFF;
+}
+
+.registration-block h3 { margin-top: 0; text-align: center; }
+.registration-block input { width: 90%; margin-bottom: 5px; padding: 5px; }
+.registration-block button { padding: 5px 10px; }
+
+#lockIcon {
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#adminLogin {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background: #fff;
+    padding: 5px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+#adminLogin input { width: 100px; margin-right: 5px; }
+#adminLogin button { padding: 2px 6px; }
+</style>
+</head>
+<body>
+
+<div id="lockIcon">🔒</div>
+<div id="adminLogin">
+    <input type="password" id="adminPass" placeholder="Пароль">
+    <button id="checkPassBtn">Войти</button>
+</div>
+
+<h2>Регистрация на мероприятие</h2>
+
+<div class="registration-container">
+    <div class="registration-block" id="reg1">
+        <h3>Регистрация 1</h3>
+        <input type="text" placeholder="Имя" class="firstName" disabled>
+        <input type="text" placeholder="Фамилия" class="lastName" disabled>
+        <button class="confirmBtn" disabled>Подтвердить</button>
+        <div class="placeInfo">12/12 мест свободно</div>
+    </div>
+
+    <div class="registration-block" id="reg2">
+        <h3>Регистрация 2</h3>
+        <input type="text" placeholder="Имя" class="firstName" disabled>
+        <input type="text" placeholder="Фамилия" class="lastName" disabled>
+        <button class="confirmBtn" disabled>Подтвердить</button>
+        <div class="placeInfo">12/12 мест свободно</div>
+    </div>
+
+    <div class="registration-block" id="reg3">
+        <h3>Регистрация 3</h3>
+        <input type="text" placeholder="Имя" class="firstName" disabled>
+        <input type="text" placeholder="Фамилия" class="lastName" disabled>
+        <button class="confirmBtn" disabled>Подтвердить</button>
+        <div class="placeInfo">12/12 мест свободно</div>
+    </div>
+
+    <div class="registration-block" id="reg4">
+        <h3>Регистрация 4</h3>
+        <input type="text" placeholder="Имя" class="firstName" disabled>
+        <input type="text" placeholder="Фамилия" class="lastName" disabled>
+        <button class="confirmBtn" disabled>Подтвердить</button>
+        <div class="placeInfo">12/12 мест свободно</div>
+    </div>
+</div>
+
+<script>
+let adminMode = false;
+
+const lockIcon = document.getElementById("lockIcon");
+const adminLogin = document.getElementById("adminLogin");
+const checkPassBtn = document.getElementById("checkPassBtn");
+
+const blocks = document.querySelectorAll('.registration-block');
+
+lockIcon.addEventListener("click", () => {
+    adminLogin.style.display = adminLogin.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", function(event) {
+    if (!adminLogin.contains(event.target) && !lockIcon.contains(event.target)) {
+        adminLogin.style.display = "none";
+    }
+});
+
+checkPassBtn.addEventListener("click", () => {
+    const pass = document.getElementById("adminPass").value;
+    if(pass === "Active") {
+        adminMode = true;
+        alert("Админ режим активирован. Щелкните по блоку, чтобы редактировать его.");
+        adminLogin.style.display = "none";
+    } else {
+        alert("Неверный пароль");
+    }
+});
+
+// Состояние участников каждого блока
+const blockData = {};
+blocks.forEach(block => {
+    blockData[block.id] = { participants: [], availableSeats: 12 };
+});
+
+blocks.forEach(block => {
+    block.addEventListener("click", () => {
+        if(!adminMode) return; // без админа редактировать нельзя
+
+        // Деактивируем все блоки
+        blocks.forEach(b => {
+            b.classList.remove("active");
+            b.querySelectorAll("input, button").forEach(el => el.disabled = true);
+        });
+
+        // Активируем выбранный
+        block.classList.add("active");
+        block.querySelectorAll("input, button").forEach(el => el.disabled = false);
+
+        const data = blockData[block.id];
+        const placeInfo = block.querySelector('.placeInfo');
+        const confirmBtn = block.querySelector('.confirmBtn');
+        const firstNameInput = block.querySelector('.firstName');
+        const lastNameInput = block.querySelector('.lastName');
+
+        confirmBtn.onclick = () => {
+            const first = firstNameInput.value.trim();
+            const last = lastNameInput.value.trim();
+            if(!first || !last) return alert("Введите имя и фамилию");
+            if(data.availableSeats <=0) return alert("Нет свободных мест");
+
+            data.participants.push(`${first} ${last}`);
+            data.availableSeats--;
+            firstNameInput.value = '';
+            lastNameInput.value = '';
+            placeInfo.textContent = `${data.availableSeats}/12 мест свободно`;
+            console.log(block.id, data.participants);
+        }
+
+        // обновляем счет мест при повторном выборе блока
+        placeInfo.textContent = `${data.availableSeats}/12 мест свободно`;
+    });
+});
+</script>
+</body>
+</html>
